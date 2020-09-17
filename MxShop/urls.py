@@ -19,11 +19,12 @@ import xadmin
 from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
 
-from goods.views import GoodsListViewSet
+from goods.views import GoodsListViewSet, CategoryViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet)
+router.register(r'categorys', CategoryViewSet, basename="categorys")
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
