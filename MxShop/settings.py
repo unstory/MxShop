@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'goods',
     'trade',
     'user_operation',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

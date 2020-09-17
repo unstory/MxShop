@@ -13,14 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, include
+from django.urls import path, include, re_path
+from rest_framework.documentation import include_docs_urls
 import xadmin
 from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
+
+from goods.views import GoodsListViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'goods', GoodsListViewSet)
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
     path('ueditor/',include('DjangoUeditor.urls')),
     path('xadmin/', xadmin.site.urls),
     path('media/<path:path>',serve,{'document_root':MEDIA_ROOT}),
+    path('docs', include_docs_urls(title='mxshop')),
+    path('api-auth', include('rest_framework.urls')),
+    re_path('^', include(router.urls)),
 ]
