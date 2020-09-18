@@ -20,11 +20,17 @@ from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
 
 from goods.views import GoodsListViewSet, CategoryViewSet
+from users.views import SmsCodeViewset, UserViewset
+
+from rest_framework.authtoken import views
+from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet)
 router.register(r'categorys', CategoryViewSet, basename="categorys")
+router.register(r'code', SmsCodeViewset, basename="code")
+router.register(r'users', UserViewset, basename="users")
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -34,4 +40,6 @@ urlpatterns = [
     path('docs', include_docs_urls(title='mxshop')),
     path('api-auth', include('rest_framework.urls')),
     re_path('^', include(router.urls)),
+    #path('api-token-auth/', views.obtain_auth_token),
+    path('login/', obtain_jwt_token),
 ]

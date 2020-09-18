@@ -46,12 +46,13 @@ INSTALLED_APPS = [
     'xadmin',
     'rest_framework',
     'crispy_forms',
-    'users',
+    'users.apps.UsersConfig',
     'goods',
     'trade',
     'user_operation',
     'django_filters',
     'coreschema',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    )
+}
+
+import datetime 
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    # token前缀
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+APIKEY = "xxxxbb8122bc6f8f484ae41eb5xxxxxx"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
