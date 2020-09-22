@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'goods',
     'trade',
-    'user_operation',
+    'user_operation.apps.UserOperationConfig',
     'django_filters',
     'coreschema',
     'rest_framework.authtoken',
@@ -136,6 +136,15 @@ REST_FRAMEWORK = {
         #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.AutoSchema",
+    #限速设置
+    'DEFAULT_THROTTLE_CLASSES': (
+            'rest_framework.throttling.AnonRateThrottle',   #未登陆用户
+            'rest_framework.throttling.UserRateThrottle'    #登陆用户
+        ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '3/minute',         #每分钟可以请求两次
+        'user': '5/minute'          #每分钟可以请求五次
+    },
 }
 
 import datetime 
@@ -143,6 +152,22 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     # token前缀
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
+
+#缓存配置
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 5   #5s过期，时间自己可以随便设定
+}
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }
 
 AUTHENTICATION_BACKENDS = (

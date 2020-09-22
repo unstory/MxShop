@@ -19,7 +19,7 @@ import xadmin
 from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
 
-from goods.views import GoodsListViewSet, CategoryViewSet
+from goods.views import GoodsListViewSet, CategoryViewSet, BannerViewset, IndexCategoryViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 from trade.views import ShoppingCartViewset, OrderViewset, AlipayView
@@ -38,6 +38,8 @@ router.register(r'messages', LeavingMessageViewset, basename="messages")
 router.register(r'address',AddressViewset , basename="address")
 router.register(r'shopcarts', ShoppingCartViewset, basename="shopcarts")
 router.register(r'orders', OrderViewset, basename="orders")
+router.register(r'banners', BannerViewset, basename="banners")
+router.register(r'indexgoods', IndexCategoryViewset, basename="indexgoods")
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
