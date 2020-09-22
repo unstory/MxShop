@@ -11,7 +11,10 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_user(sender, instance=None, created=False, **kwargs):
     # 是否新建，因为update的时候也会进行post_save
+    print("use create user")
     if created:
+        if sender.is_superuser:
+            return 
         password = instance.password
         #instance相当于user
         instance.set_password(password)

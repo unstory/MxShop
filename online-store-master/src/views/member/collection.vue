@@ -105,6 +105,7 @@
               getAllFavs().then((response)=> {
                     this.collections = response.data;
                 }).catch(function (error) {
+                    console.log("error msg:")
                     console.log(error);
                 });
             },

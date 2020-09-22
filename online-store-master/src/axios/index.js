@@ -13,6 +13,7 @@ axios.interceptors.request.use(
   config => {
     if (store.state.userInfo.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
       config.headers.Authorization = `Bearer ${store.state.userInfo.token}`;
+      config.headers.is_authenticated = true;
     }
     return config;
   },

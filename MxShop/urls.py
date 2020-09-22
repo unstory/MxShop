@@ -21,6 +21,7 @@ from MxShop.settings import MEDIA_ROOT
 
 from goods.views import GoodsListViewSet, CategoryViewSet
 from users.views import SmsCodeViewset, UserViewset
+from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
@@ -31,6 +32,9 @@ router.register(r'goods', GoodsListViewSet)
 router.register(r'categorys', CategoryViewSet, basename="categorys")
 router.register(r'code', SmsCodeViewset, basename="code")
 router.register(r'users', UserViewset, basename="users")
+router.register(r'userfavs', UserFavViewset, basename="userfavs")
+router.register(r'messages', LeavingMessageViewset, basename="messages")
+router.register(r'address',AddressViewset , basename="address")
 
 urlpatterns = [
     #path('admin/', admin.site.urls),

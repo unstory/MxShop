@@ -25,7 +25,7 @@ class GoodsPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsListViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
+class GoodsListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     '商品列表页'
 
     #这里必须要定义一个默认的排序,否则会报错
@@ -39,7 +39,7 @@ class GoodsListViewSet(mixins.ListModelMixin,viewsets.GenericViewSet):
     # 设置filter的类为我们自定义的类
     #过滤
     filter_class = GoodsFilter
-    #搜索,=name表示精确搜索，也可以使用各种正则表达式
+    #搜索
     search_fields = ('name', 'goods_brief', 'goods_desc')
     #排序
     ordering_fields = ('sold_num', 'shop_price')

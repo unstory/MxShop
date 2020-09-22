@@ -1,6 +1,5 @@
 //这个是全局文件
 
-import mock from '../mock/mock.js'
 
 //全局引入jq
 import $ from 'jquery';
