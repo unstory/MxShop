@@ -22,7 +22,7 @@ from MxShop.settings import MEDIA_ROOT
 from goods.views import GoodsListViewSet, CategoryViewSet
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
-from trade.views import ShoppingCartViewset, OrderViewset
+from trade.views import ShoppingCartViewset, OrderViewset, AlipayView
 
 from rest_framework.authtoken import views
 from rest_framework_jwt.views import obtain_jwt_token
@@ -49,4 +49,5 @@ urlpatterns = [
     re_path('^', include(router.urls)),
     #path('api-token-auth/', views.obtain_auth_token),
     path('login/', obtain_jwt_token),
+    path('alipay/return/', AlipayView.as_view()),
 ]

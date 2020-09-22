@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import sys
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR/'apps'))
 sys.path.insert(0, str(BASE_DIR/'extra_apps'))
+private_key_path = os.path.join(str(BASE_DIR), 'apps/trade/keys/private_2048.txt')
+ali_pub_key_path = os.path.join(str(BASE_DIR), 'apps/trade/keys/alipay_key_2048.txt')
 
 
 # Quick-start development settings - unsuitable for production
