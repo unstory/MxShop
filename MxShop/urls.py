@@ -19,7 +19,7 @@ import xadmin
 from django.views.static import serve
 from MxShop.settings import MEDIA_ROOT
 
-from goods.views import GoodsListViewSet, CategoryViewSet, BannerViewset, IndexCategoryViewset
+from goods.views import GoodsListViewSet, CategoryViewSet, BannerViewset, IndexCategoryViewset, HotSearchsViewset
 from users.views import SmsCodeViewset, UserViewset
 from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 from trade.views import ShoppingCartViewset, OrderViewset, AlipayView
@@ -30,6 +30,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'goods', GoodsListViewSet)
+router.register(r'hotsearchs', HotSearchsViewset)
 router.register(r'categorys', CategoryViewSet, basename="categorys")
 router.register(r'code', SmsCodeViewset, basename="code")
 router.register(r'users', UserViewset, basename="users")
@@ -52,4 +53,5 @@ urlpatterns = [
     #path('api-token-auth/', views.obtain_auth_token),
     path('login/', obtain_jwt_token),
     path('alipay/return/', AlipayView.as_view()),
+    path('', include('social_django.urls', namespace='social')),
 ]

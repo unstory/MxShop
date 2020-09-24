@@ -33,7 +33,7 @@ SECRET_KEY = '(6te(=u^u4=v_x=2ylfbg^p_otq83)n1*nyx9e!c3vt5=ol67f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_filters',
     'coreschema',
     'rest_framework.authtoken',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+from corsheaders.defaults import default_headers
+CORS_ALLOW_HEADERS = default_headers + (
+    'contenttype',
+    'content-type',
+    'is_authenticated',
+    'Authorization',
+)
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'MxShop.urls'
 AUTH_USER_MODEL = 'users.UserProfile'
 
@@ -84,6 +102,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -142,8 +162,8 @@ REST_FRAMEWORK = {
             'rest_framework.throttling.UserRateThrottle'    #登陆用户
         ),
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '3/minute',         #每分钟可以请求两次
-        'user': '5/minute'          #每分钟可以请求五次
+        'anon': '100/minute',         #每分钟可以请求两次
+        'user': '1000/minute'          #每分钟可以请求五次
     },
 }
 
@@ -151,7 +171,7 @@ import datetime
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     # token前缀
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
 #缓存配置
@@ -172,7 +192,12 @@ CACHES = {
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
+    'social_core.backends.weibo.WeiboOAuth2',
+    'social_core.backends.qq.QQOAuth2',
+    'social_core.backends.weixin.WeixinOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
+
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 APIKEY = "xxxxbb8122bc6f8f484ae41eb5xxxxxx"
 
@@ -199,3 +224,7 @@ MEDIA_ROOT = str(BASE_DIR/"media")
 import os
 MEDIA_URL="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
+
+SOCIAL_AUTH_WEIBO_KEY = 'x47092358x'
+SOCIAL_AUTH_WEIBO_SECRET = 'x3aae945fb632f5ad775b56daa3d204x'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000'

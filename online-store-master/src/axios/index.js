@@ -8,12 +8,16 @@ import store from '../store/store';
 import * as types from '../store/mutation-types';
 import router from '../router'
 
+axios.defaults.timeout = 5000;
+axios.defaults.headers.post['Content-Type'] = 
+'application/x-www-form-urlencoded;charset=UTF-8';
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
     if (store.state.userInfo.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
       config.headers.Authorization = `Bearer ${store.state.userInfo.token}`;
-      //config.headers.is_authenticated = true;
+      config.headers.is_authenticated = true;
+      config.headers.contenttype = 'application/json';
     }
     return config;
   },

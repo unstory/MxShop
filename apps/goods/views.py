@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer
-from .models import Goods, GoodsCategory, Banner
+from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer, HotWordsSerializer
+from .models import Goods, GoodsCategory, Banner, HotSearchWords
 from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework import generics
@@ -73,3 +73,9 @@ class IndexCategoryViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = GoodsCategory.objects.filter(is_tab=True, name__in=["生鲜食品", "酒水饮料", "粮油副食", "蔬菜水果"])
     serializer_class = IndexCategorySerializer
     
+class HotSearchsViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    热搜
+    """
+    queryset = HotSearchWords.objects.all().order_by("-index")
+    serializer_class = HotWordsSerializer
